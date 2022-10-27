@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draggable Object</title>
+    <script src="https://code.jquery.com/jquery-2.0.1.min.js" integrity="sha256-JD9u5RNjfbbYl/AbiYYvVPKcLNlKNe2urUMuGzNEIck=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/utils/Draggable.min.js"></script>
+    <style>
+        .draggable {
+          width: initials;
+          height: initials;
+          padding: 0.5em;
+          float: left;
+          margin: 0 10px 10px 0;
+        }
+      
+        #draggable,
+        #draggable2 {
+          margin-bottom: 20px;
+        }
+      
+        #draggable {
+          cursor: n-resize;
+        }
+      
+        #draggable3 {
+            cursor: move;
+        }
+      
+        #containment-wrapper {
+          width: 700px;
+          height: 500px;
+          border: 1px solid #000;
+          padding: 5px;
+        }
+      
+        h3 {
+          clear: left;
+        }
+      
+      </style>
+</head>
+<body>
+<div id="containment-wrapper">
+  <div id="draggable3" class="draggable ui-widget-content">
+    <fieldset>
+      <legend>Choose your monster's features:</legend>
+
+      <div>
+        <input type="checkbox" id="scales" name="scales" checked>
+        <label for="scales">Scales</label>
+      </div>
+      <div>
+        <input type="checkbox" id="horns" name="horns">
+        <label for="horns">Horns</label>
+      </div>
+    </fieldset>
+  </div>
+    
+  
+  <script>
+    var sPositions = localStorage.positions || "{}",
+     positions = JSON.parse(sPositions);
+   $.each(positions, function(id, pos) {
+     $("#" + id).css(pos)
+   })
+   $("#draggable3").draggable({
+     containment: "#containment-wrapper",
+     scroll: false,
+     stop: function(event, ui) {
+       positions[this.id] = ui.position
+       localStorage.positions = JSON.stringify(positions)
+     }
+   });
+   </script>
+</body>
+</html>
