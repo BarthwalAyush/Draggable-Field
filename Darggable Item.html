@@ -84,7 +84,7 @@
   <div class="draggable-main">
     <div class="row" style="height:100vh;display: flex;" >
         <div class="col-1 draggable-left" style="width: 10%;text-align: center;">
-          <div class="box" style="background:blue;padding:10px;">Form Element</div>
+          <div class="box" style="background:blue;padding:10px;color:white;">Form Element</div>
           <h6 class="drag">Checkbox</h6>
         </div>
         <div class="col-11 bal_builder draggable-right" id="bal_builder" style="width: 90%;background:aqua;">
@@ -97,14 +97,16 @@
     $(".drag").draggable({ helper: "clone" });
 
     $(".bal_builder").droppable({
+      accept: ".drag",
       drop: function(event, ui) {
-      $(".bal_builder").append('<div id="dash"><input type="text" name="label_81094" class="form-control form_input_label" value="Label" data-field="81094"><input type="text" name="option_81094" class="form-control form_input_label" value="Option" data-field="81094"></div>');
+        var new_signature = $(ui.helper).html('<div id="dash"><input type="text" name="label_81094" class="form-control form_input_label" value="Label" data-field="81094"><input type="text" name="option_81094" class="form-control form_input_label" value="Option" data-field="81094"></div>').clone().removeClass('drag');
+        new_signature.draggable({ containment: ".bal_builder"});
+        $(".bal_builder").append(new_signature);
+        // $(".bal_builder").append('<div id="dash"><input type="text" name="label_81094" class="form-control form_input_label" value="Label" data-field="81094"><input type="text" name="option_81094" class="form-control form_input_label" value="Option" data-field="81094"></div>');
+        // $("#dash").draggable({ containment: ".bal_builder"}).removeClass('drag');
     }
     });
     
-    
-
   </script>
 </body>
 </html>
-
